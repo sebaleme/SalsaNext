@@ -16,8 +16,11 @@ import cv2
 import os
 import numpy as np
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+print(dir_path)
+
 from tasks.semantic.modules.SalsaNext import *
-from tasks.semantic.modules.SalsaNextUncertainty import *
+from tasks.semantic.modules.SalsaNextAdf import *
 from tasks.semantic.postproc.KNN import KNN
 
 
@@ -78,6 +81,7 @@ class User():
     self.gpu = False
     self.model_single = self.model
     self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(" torch.cuda.is_available(): ",  torch.cuda.is_available())
     print("Infering in device: ", self.device)
     if torch.cuda.is_available() and torch.cuda.device_count() > 0:
       cudnn.benchmark = True
@@ -225,13 +229,6 @@ class User():
         else:
             proj_output = self.model(proj_in)
             proj_argmax = proj_output[0].argmax(dim=0)
-            if torch.cuda.is_available():
-                torch.cuda.synchronize()
-            res = time.time() - end
-            print("Network seq", path_seq, "scan", path_name,
-                  "in", res, "sec")
-            end = time.time()
-            cnn.append(res)
 
             if torch.cuda.is_available():
                 torch.cuda.synchronize()

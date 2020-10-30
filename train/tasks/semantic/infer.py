@@ -9,8 +9,8 @@ from shutil import copyfile
 import os
 import shutil
 import __init__ as booger
-
 from tasks.semantic.modules.user import *
+
 def str2bool(v):
     if isinstance(v, bool):
        return v
@@ -76,7 +76,7 @@ if __name__ == '__main__':
     print("log", FLAGS.log)
     print("model", FLAGS.model)
     print("Uncertainty", FLAGS.uncertainty)
-    print("Monte Carlo Sampling", FLAGS.mc)
+    print("Monte Carlo Sampling", FLAGS.monte_carlo)
     print("infering", FLAGS.split)
     print("----------\n")
     #print("Commit hash (training version): ", str(
@@ -86,7 +86,7 @@ if __name__ == '__main__':
     # open arch config file
     try:
         print("Opening arch config file from %s" % FLAGS.model)
-        ARCH = yaml.safe_load(open(FLAGS.model + "/arch_cfg.yaml", 'r'))
+        ARCH = yaml.safe_load(open(FLAGS.model + "/salsanext.yml", 'r'))
     except Exception as e:
         print(e)
         print("Error opening arch yaml file.")
@@ -139,6 +139,9 @@ if __name__ == '__main__':
         print("model folder doesnt exist! Can't infer...")
         quit()
 
+    print('__Number CUDA Devices:', torch.cuda.device_count())
+    print('__Devices')
+
     # create user and infer dataset
-    user = User(ARCH, DATA, FLAGS.dataset, FLAGS.log, FLAGS.model,FLAGS.split,FLAGS.uncertainty,FLAGS.mc)
+    user = User(ARCH, DATA, FLAGS.dataset, FLAGS.log, FLAGS.model,FLAGS.split,FLAGS.uncertainty,FLAGS.monte_carlo)
     user.infer()

@@ -16,7 +16,7 @@ do
       p ) p="$OPTARG" ;;
       m ) m="$OPTARG" ;;
       s ) s="$OPTARG" ;;
-      n ) n="$OPTARG"  ;;
+      n ) n="$OPTARG" ;;
       g ) g="$OPTARG" ;;
       u ) u="$OPTARG" ;;
       c ) c="$OPTARG" ;;
@@ -36,6 +36,7 @@ d=$(get_abs_filename "$d")
 p=$(get_abs_filename "$p")
 m=$(get_abs_filename "$m")
 export CUDA_VISIBLE_DEVICES="$g"
+echo "CUDA_VISIBLE_DEVICES:" $CUDA_VISIBLE_DEVICES " blim"
 cd ./train/tasks/semantic/; ./infer.py -d "$d" -l "$p" -m "$m" -n "$n" -s "$s" -u "$u" -c "$c"
 echo "finishing infering.\n Starting evaluating"
 ./evaluate_iou.py -d "$d" -p "$p" --split "$s" -m "$m"
