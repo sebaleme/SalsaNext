@@ -49,7 +49,9 @@ To train/eval you can use the following scripts:
      * ```-c [Int]```: Number of MC sampling to do (default ```30```)
    * If you want to infer&evaluate a model that you saved to ````/salsanext/logs/[the desired run]```` and you
    want to infer$eval only the validation and save the label prediction to ```/pred```:
-     * ```./eval.sh -d /dataset -p /pred -m /salsanext/logs/[the desired run] -s validation -n salsanext```
+     * ```./eval.sh -d dataset_odo_test -m model -p predictions -c 30```
+     * the model config file for the provided model is available in the root folder: salsanext.yml, it should be renamed and stored in the model folder location
+     * the data config file is provided for the kitti dataset under train/tasks/semantic/config/labels (2 variants depending on label granularity)
      
 ### Pretrained Model
 
@@ -58,7 +60,6 @@ To train/eval you can use the following scripts:
 ### Disclamer
 
 We based our code on [RangeNet++](https://github.com/PRBonn/lidar-bonnetal), please go show some support!
- 
 
 ### Citation
 
